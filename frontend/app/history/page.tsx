@@ -49,8 +49,8 @@ export default function HistoryPage() {
             <h1 className="font-display font-bold text-3xl md:text-4xl text-glow text-white">Analysis <span className="gradient-text">History</span></h1>
             <p className="text-white/50 mt-1">{history.length} analysis{history.length !== 1 ? 'es' : ''} completed</p>
           </div>
-          <Link href="/analyze" className="btn-3d px-4 py-2.5 text-sm flex items-center gap-2">
-            <TrendingUp className="w-4 h-4" /> New Analysis
+          <Link href="/analyze" className="btn-3d px-4 py-2.5 text-sm flex items-center justify-center gap-2 whitespace-nowrap flex-shrink-0">
+            <TrendingUp className="w-4 h-4" /> <span className="hidden sm:inline">New Analysis</span><span className="sm:hidden">New</span>
           </Link>
         </motion.div>
 
@@ -63,8 +63,8 @@ export default function HistoryPage() {
             className="card-3d p-16 text-center">
             <History className="w-14 h-14 mx-auto mb-4 text-white/20" />
             <h2 className="font-display font-semibold text-xl mb-2 text-white/60">No analyses yet</h2>
-            <p className="text-white/30 mb-6">Upload your resume and analyze it against a job description.</p>
-            <Link href="/analyze" className="btn-3d px-6 py-3">Start First Analysis</Link>
+            <p className="text-white/30 mb-6 max-w-sm mx-auto">Upload your resume and analyze it against a job description.</p>
+            <Link href="/analyze" className="btn-3d px-6 py-3 inline-block whitespace-nowrap text-sm md:text-base">Start First Analysis</Link>
           </motion.div>
         ) : (
           <div className="grid md:grid-cols-2 gap-4">
