@@ -12,14 +12,6 @@ const nextConfig = {
       },
     ];
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'https://ai-resume-analyzer-production-fdef.up.railway.app/api/:path*',
-      },
-    ];
-  },
 };
 
 module.exports = nextConfig;
