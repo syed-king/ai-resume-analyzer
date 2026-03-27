@@ -74,9 +74,9 @@ export default function Navbar() {
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="md:hidden fixed bottom-4 left-4 right-4 z-50"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50"
       >
-        <div className="card-3d flex items-center justify-around px-2 py-3">
+        <div className="card-3d rounded-none rounded-t-3xl border-x-0 border-b-0 flex items-center justify-around px-2 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))] bg-black/80 backdrop-blur-2xl">
           {navLinks.map(({ href, label, icon: Icon }) => (
             <Link key={href} href={href} className="flex flex-col items-center gap-1">
               <div className={`p-2 rounded-xl transition-all ${

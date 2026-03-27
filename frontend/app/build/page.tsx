@@ -20,6 +20,7 @@ export default function BuildResumePage() {
   const [accentColor, setAccentColor] = useState('#000000');
   const [fontFamily, setFontFamily] = useState('"Times New Roman", Times, serif');
   const [layout, setLayout] = useState<'standard' | 'modern' | 'centered'>('standard');
+  const [activeMobileTab, setActiveMobileTab] = useState<'editor' | 'preview'>('editor');
 
   const printRef = useRef<HTMLDivElement>(null);
 
@@ -54,12 +55,28 @@ export default function BuildResumePage() {
   return (
     <div className="min-h-screen gradient-bg grid-bg flex flex-col">
       <Navbar />
-      <main className="relative z-10 pt-24 pb-28 md:pb-10 px-4 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 w-full flex-1">
+      <main className="relative z-10 pt-20 pb-36 md:pb-10 px-4 max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 w-full flex-1">
         
+        {/* Mobile Tab Switcher */}
+        <div className="lg:hidden flex bg-black/40 p-1.5 rounded-2xl w-full sticky top-16 z-40 backdrop-blur-xl border border-white/10 shadow-2xl overflow-hidden mt-4">
+          <button 
+            onClick={() => setActiveMobileTab('editor')}
+            className={`flex-1 py-3 text-sm font-display font-semibold transition-all rounded-xl flex items-center justify-center gap-2 ${activeMobileTab === 'editor' ? 'bg-purple-500/30 text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.3)] border border-purple-500/50' : 'text-white/50 hover:bg-white/5'}`}
+          >
+            <FileText className="w-4 h-4" /> Edit Details
+          </button>
+          <button 
+            onClick={() => setActiveMobileTab('preview')}
+            className={`flex-1 py-3 text-sm font-display font-semibold transition-all rounded-xl flex items-center justify-center gap-2 ${activeMobileTab === 'preview' ? 'bg-blue-500/30 text-blue-300 shadow-[0_0_20px_rgba(59,130,246,0.3)] border border-blue-500/50' : 'text-white/50 hover:bg-white/5'}`}
+          >
+            <Printer className="w-4 h-4" /> Live Preview
+          </button>
+        </div>
+
         {/* Editor Side */}
-        <div className="lg:w-1/2 space-y-6 overflow-y-auto max-h-[85vh] pr-2 custom-scrollbar no-print">
+        <div className={`lg:w-1/2 space-y-6 overflow-y-auto max-h-[85vh] pr-2 custom-scrollbar no-print ${activeMobileTab === 'editor' ? 'block' : 'hidden lg:block'}`}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="font-display font-bold text-3xl md:text-4xl text-glow text-white">
+            <h1 className="font-display font-bold text-3xl md:text-4xl text-glow text-white hidden lg:block">
               Resume <span className="gradient-text">Builder</span>
             </h1>
             <p className="text-white/50 mb-6 mt-1">
@@ -188,7 +205,7 @@ export default function BuildResumePage() {
         </div>
 
         {/* Live Preview & Export Side */}
-        <div className="lg:w-1/2 flex flex-col no-print h-[85vh]">
+        <div className={`lg:w-1/2 flex-col no-print lg:h-[85vh] ${activeMobileTab === 'preview' ? 'flex' : 'hidden lg:flex'}`}>
           <div className="flex items-center justify-end gap-3 mb-4 shrink-0">
             <button onClick={handleDownloadPdf} className="btn-3d px-6 py-3 text-sm flex items-center gap-2">
               <Printer className="w-4 h-4" /> Save as PDF
