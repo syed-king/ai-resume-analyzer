@@ -1,7 +1,7 @@
 'use client';
 import axios from 'axios';
 
-const API_URL = 'https://ai-resume-analyzer-production-fdef.up.railway.app';
+const API_URL = '';
 
 const api = axios.create({ baseURL: API_URL });
 
