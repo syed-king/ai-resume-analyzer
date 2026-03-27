@@ -101,6 +101,62 @@ h1, h2, h3, h4, h5, h6 {
   .input-glass:focus {
     @apply border-purple-500/70 shadow-glow;
   }
+  /* Gen-Z 3D Neo-Brutalist & Glass */
+  .grid-bg {
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    perspective: 1000px;
+  }
+
+  .btn-3d {
+    @apply relative px-8 py-4 rounded-2xl font-bold font-display tracking-widest text-white uppercase transition-all duration-150;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    border: 2px solid rgba(255,255,255,0.25);
+    box-shadow: 0 6px 0 #7c3aed, 0 15px 25px rgba(124, 58, 237, 0.4);
+    transform: translateY(0);
+  }
+  .btn-3d:hover {
+    box-shadow: 0 8px 0 #7c3aed, 0 20px 30px rgba(124, 58, 237, 0.6);
+    transform: translateY(-2px);
+  }
+  .btn-3d:active {
+    box-shadow: 0 0px 0 #7c3aed, 0 5px 10px rgba(124, 58, 237, 0.4);
+    transform: translateY(6px);
+  }
+
+  .card-3d {
+    @apply bg-white/5 backdrop-blur-2xl border border-white/20 rounded-[2rem] transition-all duration-300;
+    box-shadow: 
+      inset 0 2px 0 rgba(255,255,255,0.2), 
+      inset 0 -2px 0 rgba(0,0,0,0.3),
+      0 20px 40px rgba(0,0,0,0.5),
+      0 0 20px rgba(139, 92, 246, 0.15);
+    transform-style: preserve-3d;
+  }
+  .card-3d:hover {
+    @apply border-purple-400/60;
+    box-shadow: 
+      inset 0 2px 0 rgba(255,255,255,0.3), 
+      inset 0 -2px 0 rgba(0,0,0,0.3),
+      0 30px 50px rgba(0,0,0,0.7),
+      0 0 40px rgba(236, 72, 153, 0.3);
+    transform: translateY(-5px);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(236, 72, 153, 0.8), 0 0 40px rgba(139, 92, 246, 0.6);
+  }
+
+  .input-3d {
+    @apply w-full bg-black/40 border-2 border-white/10 rounded-2xl px-5 py-4 text-white placeholder-white/30 outline-none transition-all duration-200;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.6);
+  }
+  .input-3d:focus {
+    @apply border-pink-500/80;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.6), 0 0 25px rgba(236, 72, 153, 0.4);
+  }
 }
 
 @keyframes gradientShift {

@@ -29,7 +29,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen gradient-bg flex items-center justify-center p-4">
+    <main className="min-h-screen gradient-bg grid-bg flex items-center justify-center p-4">
       <div className="fixed inset-0 pointer-events-none">
         <div className="orb w-96 h-96 bg-purple-600 top-[-10%] left-[-5%]" />
         <div className="orb w-72 h-72 bg-pink-600 bottom-[-5%] right-[-5%]" style={{ animationDelay: '2s' }} />
@@ -40,12 +40,12 @@ export default function RegisterPage() {
         animate={{ y: 0, opacity: 1 }}
         className="relative z-10 w-full max-w-md"
       >
-        <div className="glass-card p-8">
+        <div className="card-3d p-8">
           <div className="text-center mb-8">
             <div className="w-14 h-14 rounded-2xl bg-gradient-purple-blue flex items-center justify-center mx-auto mb-4 shadow-glow">
               <Zap className="w-7 h-7 text-white" />
             </div>
-            <h1 className="font-display font-bold text-3xl mb-2">Create account</h1>
+            <h1 className="font-display font-bold text-3xl mb-2 text-glow text-white">Create account</h1>
             <p className="text-white/50">Start analyzing resumes for free</p>
           </div>
 
@@ -55,7 +55,7 @@ export default function RegisterPage() {
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
                 <input type="text" value={name} onChange={e => setName(e.target.value)}
-                  className="input-glass pl-10" placeholder="Your Name" />
+                  className="input-3d pl-10" placeholder="Your Name" />
               </div>
             </div>
             <div>
@@ -63,7 +63,7 @@ export default function RegisterPage() {
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
                 <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
-                  className="input-glass pl-10" placeholder="you@example.com" />
+                  className="input-3d pl-10" placeholder="you@example.com" />
               </div>
             </div>
             <div>
@@ -71,7 +71,7 @@ export default function RegisterPage() {
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
                 <input type={showPw ? 'text' : 'password'} required value={password} onChange={e => setPassword(e.target.value)}
-                  className="input-glass pl-10 pr-10" placeholder="Min 6 characters" />
+                  className="input-3d pl-10 pr-10" placeholder="Min 6 characters" />
                 <button type="button" onClick={() => setShowPw(!showPw)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60">
                   {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -81,7 +81,7 @@ export default function RegisterPage() {
             <motion.button
               type="submit" disabled={loading}
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-              className="btn-primary w-full py-3.5 text-center disabled:opacity-60"
+              className="btn-3d w-full py-4 text-center disabled:opacity-60"
             >
               {loading ? 'Creating account…' : 'Create Free Account'}
             </motion.button>

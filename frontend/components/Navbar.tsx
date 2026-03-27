@@ -29,13 +29,13 @@ export default function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="hidden md:flex fixed top-4 left-1/2 -translate-x-1/2 z-50 items-center gap-2 px-4 py-2 glass shadow-glass"
+        className="hidden md:flex fixed top-4 left-1/2 -translate-x-1/2 z-50 items-center gap-2 px-4 py-2 card-3d shadow-glow"
       >
         <Link href="/" className="flex items-center gap-2 mr-4">
           <div className="w-7 h-7 rounded-lg bg-gradient-purple-blue flex items-center justify-center">
             <Zap className="w-4 h-4 text-white" />
           </div>
-          <span className="font-display font-bold text-sm gradient-text">ResumeAI</span>
+          <span className="font-display font-bold text-sm text-glow text-white">ResumeAI</span>
         </Link>
         {navLinks.map(({ href, label }) => (
           <Link
@@ -75,7 +75,7 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className="md:hidden fixed bottom-4 left-4 right-4 z-50"
       >
-        <div className="glass flex items-center justify-around px-2 py-3">
+        <div className="card-3d flex items-center justify-around px-2 py-3">
           {navLinks.map(({ href, label, icon: Icon }) => (
             <Link key={href} href={href} className="flex flex-col items-center gap-1">
               <div className={`p-2 rounded-xl transition-all ${

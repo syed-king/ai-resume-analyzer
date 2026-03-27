@@ -44,7 +44,7 @@ export default function DashboardPage() {
   const bestScore = history.length ? Math.max(...history.map(h => h.match_score)) : 0;
 
   return (
-    <div className="min-h-screen gradient-bg">
+    <div className="min-h-screen gradient-bg grid-bg">
       <div className="fixed inset-0 pointer-events-none">
         <div className="orb w-80 h-80 bg-purple-600 top-[-5%] right-[10%]" />
         <div className="orb w-64 h-64 bg-blue-600 bottom-[10%] left-[-5%]" style={{ animationDelay: '3s' }} />
@@ -55,7 +55,7 @@ export default function DashboardPage() {
         {/* Greeting */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <h1 className="font-display font-bold text-3xl md:text-4xl">
-            Hey, <span className="gradient-text">{user.full_name?.split(' ')[0] || 'there'}</span> 👋
+            Hey, <span className="gradient-text text-glow">{user.full_name?.split(' ')[0] || 'there'}</span> 👋
           </h1>
           <p className="text-white/50 mt-1">Here&apos;s your resume performance overview.</p>
         </motion.div>
@@ -71,7 +71,7 @@ export default function DashboardPage() {
               key={label}
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="glass-card p-5 card-hover"
+              className="card-3d p-5 relative group"
             >
               <Icon className={`w-5 h-5 ${color} mb-3`} />
               <p className="font-display font-bold text-2xl">{value}</p>
@@ -84,13 +84,13 @@ export default function DashboardPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35 }}
-          className="glass-card p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4"
+          className="card-3d p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4"
         >
           <div>
             <h2 className="font-display font-semibold text-xl mb-1">Ready for your next analysis?</h2>
             <p className="text-white/50 text-sm">Upload a resume and paste a job description to get your AI match score.</p>
           </div>
-          <Link href="/analyze" className="btn-primary px-6 py-3 flex items-center gap-2 whitespace-nowrap">
+          <Link href="/analyze" className="btn-3d px-6 py-3 flex items-center gap-2 whitespace-nowrap">
             New Analysis <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
@@ -106,10 +106,10 @@ export default function DashboardPage() {
 
           {fetching ? (
             <div className="space-y-3">
-              {[1,2,3].map(i => <div key={i} className="glass-card p-4 h-16 shimmer" />)}
+              {[1,2,3].map(i => <div key={i} className="card-3d p-4 h-16 shimmer" />)}
             </div>
           ) : history.length === 0 ? (
-            <div className="glass-card p-10 text-center text-white/40">
+            <div className="card-3d p-10 text-center text-white/40">
               <History className="w-10 h-10 mx-auto mb-3 opacity-30" />
               <p>No analyses yet. Upload your first resume!</p>
             </div>
@@ -121,7 +121,7 @@ export default function DashboardPage() {
                   initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 + i * 0.05 }}
                 >
-                  <Link href={`/results/${item.id}`} className="glass-card p-4 flex items-center justify-between hover:border-purple-500/30 transition-all block">
+                  <Link href={`/results/${item.id}`} className="card-3d p-4 flex items-center justify-between transition-all block group">
                     <div>
                       <p className="font-medium text-sm">{item.resume_filename || 'Resume'}</p>
                       <p className="text-white/40 text-xs mt-0.5">{new Date(item.created_at).toLocaleDateString()}</p>

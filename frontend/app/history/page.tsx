@@ -37,7 +37,7 @@ export default function HistoryPage() {
   if (loading || !user) return null;
 
   return (
-    <div className="min-h-screen gradient-bg">
+    <div className="min-h-screen gradient-bg grid-bg">
       <div className="fixed inset-0 pointer-events-none">
         <div className="orb w-80 h-80 bg-blue-600 top-[-5%] right-[-5%]" />
         <div className="orb w-72 h-72 bg-purple-600 bottom-[5%] left-[-5%]" style={{ animationDelay: '2s' }} />
@@ -46,32 +46,32 @@ export default function HistoryPage() {
       <main className="relative z-10 pt-24 pb-28 md:pb-10 px-4 max-w-5xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="font-display font-bold text-3xl md:text-4xl">Analysis <span className="gradient-text">History</span></h1>
+            <h1 className="font-display font-bold text-3xl md:text-4xl text-glow text-white">Analysis <span className="gradient-text">History</span></h1>
             <p className="text-white/50 mt-1">{history.length} analysis{history.length !== 1 ? 'es' : ''} completed</p>
           </div>
-          <Link href="/analyze" className="btn-primary px-4 py-2.5 text-sm flex items-center gap-2">
+          <Link href="/analyze" className="btn-3d px-4 py-2.5 text-sm flex items-center gap-2">
             <TrendingUp className="w-4 h-4" /> New Analysis
           </Link>
         </motion.div>
 
         {fetching ? (
           <div className="grid md:grid-cols-2 gap-4">
-            {[1,2,3,4].map(i => <div key={i} className="glass-card p-6 h-32 shimmer" />)}
+            {[1,2,3,4].map(i => <div key={i} className="card-3d p-6 h-32 shimmer" />)}
           </div>
         ) : history.length === 0 ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            className="glass-card p-16 text-center">
+            className="card-3d p-16 text-center">
             <History className="w-14 h-14 mx-auto mb-4 text-white/20" />
             <h2 className="font-display font-semibold text-xl mb-2 text-white/60">No analyses yet</h2>
             <p className="text-white/30 mb-6">Upload your resume and analyze it against a job description.</p>
-            <Link href="/analyze" className="btn-primary px-6 py-3">Start First Analysis</Link>
+            <Link href="/analyze" className="btn-3d px-6 py-3">Start First Analysis</Link>
           </motion.div>
         ) : (
           <div className="grid md:grid-cols-2 gap-4">
             {history.map((item, i) => (
               <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}>
-                <Link href={`/results/${item.id}`} className="glass-card p-5 card-hover block hover:border-purple-500/30 transition-all">
+                <Link href={`/results/${item.id}`} className="card-3d p-5 relative group block transition-all">
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <p className="font-medium text-sm">{item.resume_filename || 'Resume'}</p>

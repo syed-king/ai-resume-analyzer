@@ -18,7 +18,7 @@ export default function LandingPage() {
   useEffect(() => { if (user) router.push('/dashboard'); }, [user, router]);
 
   return (
-    <main className="min-h-screen gradient-bg overflow-hidden">
+    <main className="min-h-screen gradient-bg grid-bg overflow-hidden">
       {/* Floating Orbs */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="orb w-96 h-96 bg-purple-600 top-[-10%] left-[-5%]" style={{ animationDelay: '0s' }} />
@@ -37,11 +37,11 @@ export default function LandingPage() {
           <div className="w-8 h-8 rounded-xl bg-gradient-purple-blue flex items-center justify-center shadow-glow">
             <Zap className="w-4 h-4 text-white" />
           </div>
-          <span className="font-display font-bold text-lg gradient-text">ResumeAI</span>
+          <span className="font-display font-bold text-lg text-glow text-white">ResumeAI</span>
         </div>
         <div className="flex gap-3">
           <Link href="/login" className="btn-secondary text-sm px-5 py-2">Login</Link>
-          <Link href="/register" className="btn-primary text-sm px-5 py-2">Get Started</Link>
+          <Link href="/register" className="btn-3d text-sm px-5 py-2">Get Started</Link>
         </div>
       </motion.header>
 
@@ -64,7 +64,7 @@ export default function LandingPage() {
           className="font-display font-bold text-5xl md:text-7xl leading-[1.1] max-w-4xl mb-6"
         >
           Land Your Dream Job with{' '}
-          <span className="gradient-text">AI-Powered</span>{' '}
+          <span className="gradient-text text-glow drop-shadow-[0_0_20px_rgba(139,92,246,0.6)]">AI-Powered</span>{' '}
           Resume Analysis
         </motion.h1>
 
@@ -84,7 +84,7 @@ export default function LandingPage() {
           transition={{ delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4"
         >
-          <Link href="/register" className="btn-primary text-base px-8 py-3.5 flex items-center gap-2">
+          <Link href="/register" className="btn-3d text-base px-8 py-3.5 flex items-center gap-2">
             Analyze My Resume <ArrowRight className="w-4 h-4" />
           </Link>
           <Link href="/login" className="btn-secondary text-base px-8 py-3.5">
@@ -127,7 +127,7 @@ export default function LandingPage() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
               whileHover={{ y: -4 }}
-              className="glass-card p-8 card-hover"
+              className="card-3d p-8 relative group"
             >
               <div className={`w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-5 ${color}`}>
                 <Icon className="w-6 h-6" />
@@ -149,7 +149,7 @@ export default function LandingPage() {
         >
           <h2 className="font-display font-bold text-3xl mb-4">Ready to boost your career?</h2>
           <p className="text-white/50 mb-8">Join thousands improving their resume success rate with AI.</p>
-          <Link href="/register" className="btn-primary text-base px-10 py-4 inline-flex items-center gap-2">
+          <Link href="/register" className="btn-3d text-base px-10 py-4 inline-flex items-center gap-2">
             Start for Free <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>

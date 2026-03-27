@@ -66,7 +66,7 @@ export default function AnalyzePage() {
   if (loading || !user) return null;
 
   return (
-    <div className="min-h-screen gradient-bg">
+    <div className="min-h-screen gradient-bg grid-bg">
       <div className="fixed inset-0 pointer-events-none">
         <div className="orb w-80 h-80 bg-purple-600 top-[-5%] left-[-5%]" />
         <div className="orb w-72 h-72 bg-pink-600 bottom-[5%] right-[-5%]" style={{ animationDelay: '2s' }} />
@@ -75,7 +75,7 @@ export default function AnalyzePage() {
       <main className="relative z-10 pt-24 pb-28 md:pb-10 px-4 max-w-5xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <h1 className="font-display font-bold text-3xl md:text-4xl mb-2">
-            Analyze Your <span className="gradient-text">Resume</span>
+            Analyze Your <span className="gradient-text text-glow">Resume</span>
           </h1>
           <p className="text-white/50">Upload your resume and paste the job description to get your AI match score.</p>
         </motion.div>
@@ -83,7 +83,7 @@ export default function AnalyzePage() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Left: Resume */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-            <div className="glass-card p-6">
+            <div className="card-3d p-6">
               <h2 className="font-display font-semibold mb-4 flex items-center gap-2">
                 <FileText className="w-5 h-5 text-purple-400" /> Your Resume
               </h2>
@@ -130,7 +130,7 @@ export default function AnalyzePage() {
 
           {/* Right: Job Description */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-            <div className="glass-card p-6 h-full flex flex-col">
+            <div className="card-3d p-6 h-full flex flex-col">
               <h2 className="font-display font-semibold mb-4 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-pink-400" /> Job Description
               </h2>
@@ -140,7 +140,7 @@ export default function AnalyzePage() {
                 placeholder="Paste the full job description here…
 
 Include requirements, responsibilities, and tech stack for best results."
-                className="input-glass flex-1 resize-none min-h-[240px] text-sm leading-relaxed"
+                className="input-3d flex-1 resize-none min-h-[240px] text-sm leading-relaxed"
               />
               <p className="text-white/30 text-xs mt-2">{jobDesc.length} characters · Aim for 200+</p>
             </div>
@@ -151,7 +151,7 @@ Include requirements, responsibilities, and tech stack for best results."
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="mt-6">
           <AnimatePresence mode="wait">
             {analyzing ? (
-              <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="glass-card p-6 text-center">
+              <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="card-3d p-6 text-center">
                 <div className="flex items-center justify-center gap-3 mb-3">
                   <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
                   <span className="font-display font-medium">AI is analyzing your resume…</span>
@@ -163,7 +163,7 @@ Include requirements, responsibilities, and tech stack for best results."
                 key="btn"
                 onClick={handleAnalyze}
                 whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                className="btn-primary w-full py-4 text-base flex items-center justify-center gap-2"
+                className="btn-3d w-full py-4 text-base flex items-center justify-center gap-2"
               >
                 <Sparkles className="w-5 h-5" />
                 Analyze with AI

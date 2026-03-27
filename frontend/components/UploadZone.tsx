@@ -29,7 +29,7 @@ export default function UploadZone({ onFile, file, onClear }: Props) {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="glass-card p-6 flex items-center gap-4"
+          className="card-3d p-6 flex items-center gap-4"
         >
           <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0">
             <CheckCircle className="w-6 h-6 text-green-400" />
@@ -49,7 +49,7 @@ export default function UploadZone({ onFile, file, onClear }: Props) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           {...(getRootProps() as any)}
-          className={`glass-card p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 border-2 border-dashed ${
+          className={`card-3d p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 border-2 border-dashed ${
             isDragActive ? 'border-purple-500/60 bg-purple-500/5 shadow-glow' : 'border-white/10 hover:border-purple-500/30'
           }`}
         >

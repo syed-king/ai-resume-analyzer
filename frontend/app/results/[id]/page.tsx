@@ -79,7 +79,7 @@ export default function ResultsPage() {
 
   if (loading || fetching || !user) {
     return (
-      <div className="min-h-screen gradient-bg flex items-center justify-center">
+      <div className="min-h-screen gradient-bg grid-bg flex items-center justify-center">
         <div className="w-10 h-10 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -93,7 +93,7 @@ export default function ResultsPage() {
   const kwTips   = JSON.parse(analysis.keyword_tips) as string[];
 
   return (
-    <div className="min-h-screen gradient-bg">
+    <div className="min-h-screen gradient-bg grid-bg">
       <div className="fixed inset-0 pointer-events-none">
         <div className="orb w-80 h-80 bg-purple-600 top-[-5%] right-[-5%]" />
         <div className="orb w-64 h-64 bg-blue-600 bottom-[5%] left-[5%]" style={{ animationDelay: '3s' }} />
@@ -105,10 +105,10 @@ export default function ResultsPage() {
             <Link href="/history" className="text-white/40 hover:text-white text-sm flex items-center gap-1 mb-2">
               <ArrowLeft className="w-3.5 h-3.5" /> Back to History
             </Link>
-            <h1 className="font-display font-bold text-3xl">Analysis <span className="gradient-text">Results</span></h1>
+            <h1 className="font-display font-bold text-3xl text-glow text-white">Analysis <span className="gradient-text">Results</span></h1>
             <p className="text-white/40 text-sm mt-1">{new Date(analysis.created_at).toLocaleString()}</p>
           </div>
-          <button onClick={downloadReport} className="btn-secondary text-sm px-4 py-2 flex items-center gap-2">
+          <button onClick={downloadReport} className="btn-3d text-sm px-4 py-2 flex items-center gap-2 scale-90 origin-right">
             <Download className="w-4 h-4" /> Download Report
           </button>
         </div>
@@ -124,7 +124,7 @@ export default function ResultsPage() {
             const c = score >= 70 ? 'text-green-400' : score >= 40 ? 'text-yellow-400' : 'text-red-400';
             return (
               <motion.div key={label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }} className="glass-card p-5 text-center">
+                transition={{ delay: i * 0.1 }} className="card-3d p-5 text-center transition-transform hover:-translate-y-2">
                 <p className="text-white/50 text-xs mb-3">{label}</p>
                 <p className={`font-display font-bold text-3xl ${c}`}>{score.toFixed(0)}%</p>
               </motion.div>
@@ -135,14 +135,14 @@ export default function ResultsPage() {
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           {/* Score Ring */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}
-            className="glass-card p-8 flex flex-col items-center justify-center">
+            className="card-3d p-8 flex flex-col items-center justify-center">
             <h2 className="font-display font-semibold mb-6">Overall Match Score</h2>
             <ScoreRing score={Math.round(analysis.match_score)} />
           </motion.div>
 
           {/* Skills */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.45 }}
-            className="glass-card p-6">
+            className="card-3d p-6">
             <h2 className="font-display font-semibold mb-4">Skill Analysis</h2>
             {matched.length > 0 && (
               <div className="mb-4">
@@ -177,7 +177,7 @@ export default function ResultsPage() {
             {suggs.map((s: any, i: number) => (
               <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 + i * 0.07 }}
-                className={`glass-card p-5 border ${colorMap[s.type] || 'border-white/10'} card-hover`}>
+                className={`card-3d p-5 border shadow-none hover:shadow-glow ${colorMap[s.type] || 'border-white/10'} relative group`}>
                 <div className="flex items-start gap-3">
                   <span className="text-2xl flex-shrink-0">{s.icon || iconMap[s.type] || '💡'}</span>
                   <div>
@@ -194,7 +194,7 @@ export default function ResultsPage() {
         {kwTips.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
             <h2 className="font-display font-semibold text-xl mb-4">Keyword Tips</h2>
-            <div className="glass-card p-5 space-y-2">
+            <div className="card-3d p-5 space-y-2">
               {kwTips.map((tip, i) => (
                 <div key={i} className="flex items-start gap-2 text-sm text-white/60">
                   <span className="text-purple-400 mt-0.5">•</span> {tip}
