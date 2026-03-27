@@ -48,7 +48,7 @@ export default function UploadZone({ onFile, file, onClear }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          {...getRootProps()}
+          {...(getRootProps() as any)}
           className={`glass-card p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 border-2 border-dashed ${
             isDragActive ? 'border-purple-500/60 bg-purple-500/5 shadow-glow' : 'border-white/10 hover:border-purple-500/30'
           }`}
