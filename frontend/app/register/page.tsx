@@ -19,7 +19,7 @@ export default function RegisterPage() {
     if (password.length < 6) { toast.error('Password must be at least 6 characters'); return; }
     setLoading(true);
     try {
-      await register(email, password, name);
+      await register(email.trim().toLowerCase(), password, name);
       toast.success('Account created! Let\'s analyze your resume 🚀');
     } catch (err: any) {
       toast.error(err?.response?.data?.detail || 'Registration failed');

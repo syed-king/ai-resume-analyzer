@@ -17,7 +17,7 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await login(email, password);
+      await login(email.trim().toLowerCase(), password);
       toast.success('Welcome back! 🚀');
     } catch (err: any) {
       toast.error(err?.response?.data?.detail || 'Login failed');
