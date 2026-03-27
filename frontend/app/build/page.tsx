@@ -1,14 +1,15 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import { generateDocx, ResumeData } from '@/lib/resumeGenerator';
 import { Download, FileText, Plus, Trash2, Printer, Palette } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useReactToPrint } from 'react-to-print';
 
 export default function BuildResumePage() {
   const [data, setData] = useState<ResumeData>({
-    personal: { fullName: '', email: '', phone: '', linkedin: '', location: '' },
+    personal: { fullName: '', email: '', phone: '', linkedin: '', github: '', location: '' },
     summary: '',
     experience: [{ company: '', role: '', location: '', startDate: '', endDate: '', current: false, bullets: '' }],
     education: [{ institution: '', degree: '', graduationDate: '', gpa: '' }],
@@ -19,6 +20,8 @@ export default function BuildResumePage() {
   const [accentColor, setAccentColor] = useState('#000000');
   const [fontFamily, setFontFamily] = useState('"Times New Roman", Times, serif');
   const [layout, setLayout] = useState<'standard' | 'modern' | 'centered'>('standard');
+
+  const printRef = useRef<HTMLDivElement>(null);
 
   const handleDownloadDocx = async () => {
     try {
@@ -34,12 +37,13 @@ export default function BuildResumePage() {
     }
   };
 
-  const handleDownloadPdf = () => {
-    toast.success('Opening print dialog. Save as PDF for ATS compatibility!');
-    setTimeout(() => {
-      window.print();
-    }, 500);
-  };
+  const handleDownloadPdf = useReactToPrint({
+    content: () => printRef.current,
+    documentTitle: data.personal.fullName ? `${data.personal.fullName}_Resume` : 'Resume',
+    onBeforeGetContent: () => { 
+      toast.success('Preparing high-quality PDF...'); 
+    }
+  });
 
   const HeaderStyle = () => {
     if (layout === 'modern') return { borderBottom: `2px solid ${accentColor}`, color: accentColor };
@@ -48,9 +52,9 @@ export default function BuildResumePage() {
   };
 
   return (
-    <div className="min-h-screen gradient-bg grid-bg">
-      <div className="no-print"><Navbar /></div>
-      <main className="relative z-10 pt-24 pb-28 md:pb-10 px-4 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 w-full">
+    <div className="min-h-screen gradient-bg grid-bg flex flex-col">
+      <Navbar />
+      <main className="relative z-10 pt-24 pb-28 md:pb-10 px-4 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 w-full flex-1">
         
         {/* Editor Side */}
         <div className="lg:w-1/2 space-y-6 overflow-y-auto max-h-[85vh] pr-2 custom-scrollbar no-print">
@@ -85,9 +89,9 @@ export default function BuildResumePage() {
                   </div>
                   <div className="col-span-2">
                     <label className="text-xs text-white/50 block mb-2">Layout Variant</label>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 w-full">
                       {['standard', 'modern', 'centered'].map((l) => (
-                        <button key={l} onClick={() => setLayout(l as any)} className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all capitalize border ${layout === l ? 'bg-purple-500/20 border-purple-500 text-purple-300 shadow-glow' : 'bg-white/5 border-white/10 text-white/50 hover:bg-white/10 hover:text-white'}`}>
+                        <button key={l} onClick={() => setLayout(l as any)} className={`flex-1 py-2 px-1 rounded-xl text-xs sm:text-sm font-medium transition-all capitalize border ${layout === l ? 'bg-purple-500/20 border-purple-500 text-purple-300 shadow-glow' : 'bg-white/5 border-white/10 text-white/50 hover:bg-white/10 hover:text-white'}`}>
                           {l}
                         </button>
                       ))}
@@ -102,10 +106,11 @@ export default function BuildResumePage() {
                 <div className="space-y-3">
                   <input className="input-3d text-sm" placeholder="Full Name (e.g. Syed Faaiz)" value={data.personal.fullName} onChange={e => setData({...data, personal: {...data.personal, fullName: e.target.value}})} />
                   <div className="grid grid-cols-2 gap-3">
-                    <input className="input-3d text-sm" placeholder="Email" value={data.personal.email} onChange={e => setData({...data, personal: {...data.personal, email: e.target.value}})} />
+                    <input className="input-3d text-sm" placeholder="Location City, ST" value={data.personal.location} onChange={e => setData({...data, personal: {...data.personal, location: e.target.value}})} />
                     <input className="input-3d text-sm" placeholder="Phone" value={data.personal.phone} onChange={e => setData({...data, personal: {...data.personal, phone: e.target.value}})} />
-                    <input className="input-3d text-sm" placeholder="Location" value={data.personal.location} onChange={e => setData({...data, personal: {...data.personal, location: e.target.value}})} />
+                    <input className="input-3d text-sm col-span-2" placeholder="Email Address" value={data.personal.email} onChange={e => setData({...data, personal: {...data.personal, email: e.target.value}})} />
                     <input className="input-3d text-sm" placeholder="LinkedIn URL" value={data.personal.linkedin} onChange={e => setData({...data, personal: {...data.personal, linkedin: e.target.value}})} />
+                    <input className="input-3d text-sm" placeholder="GitHub URL" value={data.personal.github} onChange={e => setData({...data, personal: {...data.personal, github: e.target.value}})} />
                   </div>
                 </div>
               </div>
@@ -183,8 +188,8 @@ export default function BuildResumePage() {
         </div>
 
         {/* Live Preview & Export Side */}
-        <div className="lg:w-1/2 flex flex-col no-print">
-          <div className="flex items-center justify-end gap-3 mb-4">
+        <div className="lg:w-1/2 flex flex-col no-print h-[85vh]">
+          <div className="flex items-center justify-end gap-3 mb-4 shrink-0">
             <button onClick={handleDownloadPdf} className="btn-3d px-6 py-3 text-sm flex items-center gap-2">
               <Printer className="w-4 h-4" /> Save as PDF
             </button>
@@ -193,17 +198,21 @@ export default function BuildResumePage() {
             </button>
           </div>
           
-          <div className="flex-1 bg-white rounded-lg shadow-2xl p-8 overflow-y-auto max-h-[75vh] resume-preview custom-scrollbar text-black print-area">
-            {/* Template Output */}
-            <div className={`max-w-[850px] mx-auto text-left`} style={{ fontFamily }}>
-              
+          {/* Scrollable Container for Preview */}
+          <div className="flex-1 bg-[#525659] rounded-lg shadow-2xl overflow-y-auto custom-scrollbar flex justify-center p-4 sm:p-8">
+            {/* Actual Printable Document Container which looks like a real piece of paper */}
+            <div 
+              ref={printRef}
+              className="w-full max-w-[850px] bg-white text-black shadow-lg"
+              style={{ fontFamily, minHeight: '1100px', padding: '40px 60px' }}
+            >
               {/* Personal Info */}
               <div className={`mb-6 ${layout === 'modern' ? 'text-left' : 'text-center'}`}>
-                <h1 className="font-bold uppercase mb-2 leading-tight" style={{ fontSize: layout === 'modern' ? '2.5rem' : '2rem', color: layout === 'modern' ? accentColor : 'black' }}>
+                <h1 className="font-bold uppercase mb-2 leading-tight" style={{ fontSize: layout === 'modern' ? '2.5rem' : '2.2rem', color: layout === 'modern' ? accentColor : 'black' }}>
                   {data.personal.fullName || 'YOUR NAME'}
                 </h1>
                 <p className="text-[14px]" style={{ color: layout === 'modern' ? '#4b5563' : 'black' }}>
-                  {[data.personal.location, data.personal.email, data.personal.phone, data.personal.linkedin].filter(Boolean).join('  |  ')}
+                  {[data.personal.location, data.personal.email, data.personal.phone, data.personal.linkedin, data.personal.github].filter(Boolean).join('  |  ')}
                 </p>
               </div>
 

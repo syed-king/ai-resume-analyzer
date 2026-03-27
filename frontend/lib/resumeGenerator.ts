@@ -7,6 +7,7 @@ export interface ResumeData {
     email: string;
     phone: string;
     linkedin: string;
+    github: string;
     location: string;
   };
   summary: string;
@@ -58,7 +59,7 @@ export const generateDocx = async (data: ResumeData) => {
     })
   );
 
-  const contactText = [data.personal.location, data.personal.email, data.personal.phone, data.personal.linkedin]
+  const contactText = [data.personal.location, data.personal.email, data.personal.phone, data.personal.linkedin, data.personal.github]
     .filter(Boolean)
     .join('  |  ');
 
