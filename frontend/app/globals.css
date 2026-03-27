@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --purple: #8b5cf6;
+  --blue: #3b82f6;
+  --pink: #ec4899;
+  --cyan: #06b6d4;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', 'system-ui', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.4); border-radius: 3px; }
+
+@layer components {
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl;
+  }
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-glass;
+  }
+  .glass-light {
+    @apply bg-black/5 backdrop-blur-xl border border-black/10 rounded-2xl;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #a78bfa, #3b82f6, #f472b6);
+  }
+
+  /* Neon glow buttons */
+  .btn-primary {
+    @apply relative px-8 py-3 rounded-full font-semibold text-white transition-all duration-300;
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+  }
+  .btn-primary:hover {
+    @apply shadow-glow -translate-y-0.5;
+  }
+  .btn-secondary {
+    @apply px-8 py-3 rounded-full font-semibold border border-purple-500/50 text-purple-400 transition-all duration-300;
+  }
+  .btn-secondary:hover {
+    @apply bg-purple-500/10 border-purple-400 shadow-glow;
+  }
+
+  /* Neon border */
+  .neon-border {
+    position: relative;
+    border-radius: 1rem;
+  }
+  .neon-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6, #ec4899);
+    z-index: -1;
+  }
+
+  /* Animated gradient background */
+  .gradient-bg {
+    background: linear-gradient(-45deg, #030712, #0f0720, #0d1435, #030712);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
+
+  /* Card hover */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-glow;
+  }
+
+  /* Score color classes */
+  .score-high { color: #22c55e; }
+  .score-mid  { color: #f59e0b; }
+  .score-low  { color: #ef4444; }
+
+  /* Input styles */
+  .input-glass {
+    @apply w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 outline-none transition-all duration-200;
+  }
+  .input-glass:focus {
+    @apply border-purple-500/70 shadow-glow;
+  }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Floating orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+  animation: float 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  33%       { transform: translateY(-30px) translateX(15px); }
+  66%       { transform: translateY(15px) translateX(-10px); }
+}
+
+/* Loading shimmer */
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Light mode overrides */
+.light body {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.light .glass {
+  @apply bg-white/70 border-black/10;
+}
+.light .glass-card {
+  @apply bg-white/80 border-black/10 shadow-lg;
+}
+.light .input-glass {
+  @apply bg-black/5 border-black/10 text-gray-900 placeholder-gray-400;
+}
+.light .gradient-bg {
+  background: linear-gradient(-45deg, #eef2ff, #f5f3ff, #ede9fe, #eef2ff);
+  background-size: 400% 400%;
+}
