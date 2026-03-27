@@ -4,12 +4,13 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useAuth } from '@/context/AuthContext';
 import { motion } from 'framer-motion';
-import { Home, Upload, History, LogOut, Sun, Moon, Zap } from 'lucide-react';
+import { Home, Upload, History, LogOut, Sun, Moon, Zap, FileEdit } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const navLinks = [
   { href: '/dashboard', label: 'Dashboard', icon: Home },
   { href: '/analyze',   label: 'Analyze',   icon: Upload },
+  { href: '/build',     label: 'Builder',   icon: FileEdit },
   { href: '/history',   label: 'History',   icon: History },
 ];
 
