@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import { generateDocx, ResumeData } from '@/lib/resumeGenerator';
-import { Download, FileText, Plus, Trash2, Printer } from 'lucide-react';
+import { Download, FileText, Plus, Trash2, Printer, Palette } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function BuildResumePage() {
@@ -16,13 +16,17 @@ export default function BuildResumePage() {
     skills: ''
   });
 
+  const [accentColor, setAccentColor] = useState('#000000');
+  const [fontFamily, setFontFamily] = useState('"Times New Roman", Times, serif');
+  const [layout, setLayout] = useState<'standard' | 'modern' | 'centered'>('standard');
+
   const handleDownloadDocx = async () => {
     try {
       if (!data.personal.fullName) {
         toast.error('Please enter at least your full name.');
         return;
       }
-      toast.success('Generating DOCX...');
+      toast.success('Generating DOCX (Professional Format)...');
       await generateDocx(data);
     } catch (e) {
       toast.error('Failed to generate DOCX.');
@@ -37,10 +41,16 @@ export default function BuildResumePage() {
     }, 500);
   };
 
+  const HeaderStyle = () => {
+    if (layout === 'modern') return { borderBottom: `2px solid ${accentColor}`, color: accentColor };
+    if (layout === 'centered') return { borderBottom: `1px solid ${accentColor}50`, color: accentColor, textAlign: 'center' as const };
+    return { borderBottom: '1px solid black', color: 'black' };
+  };
+
   return (
-    <div className="min-h-screen gradient-bg grid-bg no-print">
-      <Navbar />
-      <main className="relative z-10 pt-24 pb-28 md:pb-10 px-4 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+    <div className="min-h-screen gradient-bg grid-bg">
+      <div className="no-print"><Navbar /></div>
+      <main className="relative z-10 pt-24 pb-28 md:pb-10 px-4 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 w-full">
         
         {/* Editor Side */}
         <div className="lg:w-1/2 space-y-6 overflow-y-auto max-h-[85vh] pr-2 custom-scrollbar no-print">
@@ -53,6 +63,39 @@ export default function BuildResumePage() {
             </p>
 
             <div className="space-y-6">
+              {/* Design Settings */}
+              <div className="card-3d p-6 border-pink-500/30">
+                <h2 className="font-display font-semibold mb-4 text-xl flex items-center gap-2"><Palette className="w-5 h-5 text-pink-400"/> Design & Theme</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-white/50 block mb-2">Accent Color</label>
+                    <div className="flex gap-2">
+                      {['#000000', '#2563eb', '#7c3aed', '#059669', '#e11d48'].map(c => (
+                        <button key={c} onClick={() => setAccentColor(c)} className={`w-8 h-8 rounded-full border-2 transition-all ${accentColor === c ? 'border-white scale-110 shadow-glow' : 'border-transparent hover:scale-105'}`} style={{ backgroundColor: c }} />
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs text-white/50 block mb-2">Typography</label>
+                    <select className="input-3d text-sm w-full bg-black/40 text-white" value={fontFamily} onChange={e => setFontFamily(e.target.value)}>
+                      <option value='"Times New Roman", Times, serif'>Classic Serif (ATS Best)</option>
+                      <option value='"Inter", sans-serif'>Modern Sans-Serif</option>
+                      <option value='"Space Grotesk", sans-serif'>Space (Creative)</option>
+                    </select>
+                  </div>
+                  <div className="col-span-2">
+                    <label className="text-xs text-white/50 block mb-2">Layout Variant</label>
+                    <div className="flex gap-2">
+                      {['standard', 'modern', 'centered'].map((l) => (
+                        <button key={l} onClick={() => setLayout(l as any)} className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all capitalize border ${layout === l ? 'bg-purple-500/20 border-purple-500 text-purple-300 shadow-glow' : 'bg-white/5 border-white/10 text-white/50 hover:bg-white/10 hover:text-white'}`}>
+                          {l}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Personal */}
               <div className="card-3d p-6">
                 <h2 className="font-display font-semibold mb-4 text-xl">1. Personal Info</h2>
@@ -146,18 +189,20 @@ export default function BuildResumePage() {
               <Printer className="w-4 h-4" /> Save as PDF
             </button>
             <button onClick={handleDownloadDocx} className="btn-3d px-6 py-3 text-sm flex items-center gap-2 bg-blue-600 border-blue-400 shadow-[0_6px_0_#2563eb]">
-              <FileText className="w-4 h-4" /> Save as DOCX
+              <FileText className="w-4 h-4" /> Save DOCX (ATS)
             </button>
           </div>
           
           <div className="flex-1 bg-white rounded-lg shadow-2xl p-8 overflow-y-auto max-h-[75vh] resume-preview custom-scrollbar text-black print-area">
-            {/* WSO/Harvard Format HTML Output */}
-            <div className="max-w-[850px] mx-auto font-serif" style={{ fontFamily: '"Times New Roman", Times, serif' }}>
+            {/* Template Output */}
+            <div className={`max-w-[850px] mx-auto text-left`} style={{ fontFamily }}>
               
               {/* Personal Info */}
-              <div className="text-center mb-6">
-                <h1 className="text-3xl font-bold uppercase mb-2 leading-tight">{data.personal.fullName || 'YOUR NAME'}</h1>
-                <p className="text-[14px]">
+              <div className={`mb-6 ${layout === 'modern' ? 'text-left' : 'text-center'}`}>
+                <h1 className="font-bold uppercase mb-2 leading-tight" style={{ fontSize: layout === 'modern' ? '2.5rem' : '2rem', color: layout === 'modern' ? accentColor : 'black' }}>
+                  {data.personal.fullName || 'YOUR NAME'}
+                </h1>
+                <p className="text-[14px]" style={{ color: layout === 'modern' ? '#4b5563' : 'black' }}>
                   {[data.personal.location, data.personal.email, data.personal.phone, data.personal.linkedin].filter(Boolean).join('  |  ')}
                 </p>
               </div>
@@ -165,7 +210,7 @@ export default function BuildResumePage() {
               {/* Summary */}
               {data.summary?.trim() && (
                 <div className="mb-4">
-                  <h2 className="text-[16px] uppercase font-bold border-b border-black mb-2 pb-0.5">Professional Summary</h2>
+                  <h2 className="text-[16px] uppercase font-bold mb-2 pb-0.5" style={HeaderStyle()}>Professional Summary</h2>
                   <p className="text-[14px] leading-relaxed">{data.summary}</p>
                 </div>
               )}
@@ -173,19 +218,19 @@ export default function BuildResumePage() {
               {/* Experience */}
               {data.experience.some(e => e.company || e.role) && (
                 <div className="mb-4">
-                  <h2 className="text-[16px] uppercase font-bold border-b border-black mb-2 pb-0.5">Experience</h2>
+                  <h2 className="text-[16px] uppercase font-bold mb-2 pb-0.5" style={HeaderStyle()}>Experience</h2>
                   {data.experience.map((exp, i) => {
                     if (!exp.company && !exp.role) return null;
                     return (
                       <div key={i} className="mb-3">
                         <div className="flex justify-between items-baseline">
-                          <span className="text-[15px] font-bold">{exp.role || 'Role'}</span>
+                          <span className="text-[15px] font-bold" style={{ color: layout === 'modern' ? accentColor : 'black' }}>{exp.role || 'Role'}</span>
                           <span className="text-[14px] font-bold">
                             {exp.startDate} – {exp.endDate}
                           </span>
                         </div>
                         <div className="flex justify-between items-baseline mb-1">
-                          <span className="text-[14px] italic">{exp.company || 'Company'}</span>
+                          <span className="text-[14px] italic text-gray-800">{exp.company || 'Company'}</span>
                           <span className="text-[14px]">{exp.location}</span>
                         </div>
                         {exp.bullets?.trim() && (
@@ -204,13 +249,13 @@ export default function BuildResumePage() {
               {/* Projects */}
               {data.projects.some(p => p.name) && (
                 <div className="mb-4">
-                  <h2 className="text-[16px] uppercase font-bold border-b border-black mb-2 pb-0.5">Projects</h2>
+                  <h2 className="text-[16px] uppercase font-bold mb-2 pb-0.5" style={HeaderStyle()}>Projects</h2>
                   {data.projects.map((proj, i) => {
                     if (!proj.name) return null;
                     return (
                       <div key={i} className="mb-3 text-[14px] leading-relaxed">
                         <p>
-                          <span className="font-bold">{proj.name}</span>
+                          <span className="font-bold" style={{ color: layout === 'modern' ? accentColor : 'black' }}>{proj.name}</span>
                           {proj.technologies && <span className="italic"> | {proj.technologies}</span>}
                         </p>
                         {proj.description?.trim() && (
@@ -229,17 +274,17 @@ export default function BuildResumePage() {
               {/* Education */}
               {data.education.some(e => e.institution) && (
                 <div className="mb-4">
-                  <h2 className="text-[16px] uppercase font-bold border-b border-black mb-2 pb-0.5">Education</h2>
+                  <h2 className="text-[16px] uppercase font-bold mb-2 pb-0.5" style={HeaderStyle()}>Education</h2>
                   {data.education.map((edu, i) => {
                     if (!edu.institution) return null;
                     return (
                       <div key={i} className="mb-3">
                         <div className="flex justify-between items-baseline">
-                          <span className="text-[15px] font-bold">{edu.institution}</span>
+                          <span className="text-[15px] font-bold" style={{ color: layout === 'modern' ? accentColor : 'black' }}>{edu.institution}</span>
                           <span className="text-[14px] font-bold">{edu.graduationDate}</span>
                         </div>
                         <div>
-                          <span className="text-[14px] italic">{edu.degree}</span>
+                          <span className="text-[14px] italic text-gray-800">{edu.degree}</span>
                           {edu.gpa && <span className="text-[14px]"> | GPA: {edu.gpa}</span>}
                         </div>
                       </div>
@@ -251,7 +296,7 @@ export default function BuildResumePage() {
               {/* Skills */}
               {data.skills?.trim() && (
                 <div className="mb-4">
-                  <h2 className="text-[16px] uppercase font-bold border-b border-black mb-2 pb-0.5">Technical Skills</h2>
+                  <h2 className="text-[16px] uppercase font-bold mb-2 pb-0.5" style={HeaderStyle()}>Technical Skills</h2>
                   <p className="text-[14px] leading-relaxed">{data.skills}</p>
                 </div>
               )}

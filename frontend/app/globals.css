@@ -276,21 +276,25 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Print Styles for Resume builder */
 @media print {
-  body {
-    background: white !important;
-    color: black !important;
+  @page { margin: 0; }
+  body * {
+    visibility: hidden;
   }
-  .no-print {
-    display: none !important;
+  .print-area, .print-area * {
+    visibility: visible;
   }
   .print-area {
     position: absolute;
-    top: 0;
     left: 0;
+    top: 0;
     width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 2cm;
+    background: white !important;
+    color: black !important;
     box-shadow: none !important;
-    background: transparent !important;
+  }
+  .no-print {
+    display: none !important;
   }
 }
