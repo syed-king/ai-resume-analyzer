@@ -75,7 +75,7 @@ export default function HistoryPage() {
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <p className="font-medium text-sm">{item.resume_filename || 'Resume'}</p>
-                      <p className="text-white/40 text-xs mt-0.5">{new Date(item.created_at).toLocaleString()}</p>
+                      <p className="text-white/40 text-xs mt-0.5">{new Date(item.created_at.endsWith('Z') ? item.created_at : item.created_at + 'Z').toLocaleString()}</p>
                     </div>
                     <ArrowRight className="w-4 h-4 text-white/20 flex-shrink-0 mt-1" />
                   </div>
