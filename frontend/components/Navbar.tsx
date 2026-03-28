@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useAuth } from '@/context/AuthContext';
 import { motion } from 'framer-motion';
-import { Home, Upload, History, LogOut, Sun, Moon, Zap, FileEdit } from 'lucide-react';
+import { Home, Upload, History, LogOut, Sun, Moon, Zap, FileEdit, Download } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const navLinks = [
@@ -12,6 +12,7 @@ const navLinks = [
   { href: '/analyze',   label: 'Analyze',   icon: Upload },
   { href: '/build',     label: 'Builder',   icon: FileEdit },
   { href: '/history',   label: 'History',   icon: History },
+  { href: '/download',  label: 'Get App',   icon: Download },
 ];
 
 export default function Navbar() {
