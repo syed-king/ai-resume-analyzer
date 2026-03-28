@@ -121,7 +121,7 @@ export default function BuildResumePage() {
               <div className="card-3d p-6">
                 <h2 className="font-display font-semibold mb-4 text-xl">1. Personal Info</h2>
                 <div className="space-y-3">
-                  <input className="input-3d text-sm" placeholder="Full Name (e.g. Syed Faaiz)" value={data.personal.fullName} onChange={e => setData({...data, personal: {...data.personal, fullName: e.target.value}})} />
+                  <input className="input-3d text-sm" placeholder="Full Name" value={data.personal.fullName} onChange={e => setData({...data, personal: {...data.personal, fullName: e.target.value}})} />
                   <div className="grid grid-cols-2 gap-3">
                     <input className="input-3d text-sm" placeholder="Location City, ST" value={data.personal.location} onChange={e => setData({...data, personal: {...data.personal, location: e.target.value}})} />
                     <input className="input-3d text-sm" placeholder="Phone" value={data.personal.phone} onChange={e => setData({...data, personal: {...data.personal, phone: e.target.value}})} />
